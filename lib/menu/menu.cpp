@@ -8,7 +8,7 @@ int choice = 0;
 void display(menu menus[], U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2) {
     u8g2.clearBuffer();
     u8g2.setFont(u8g2_font_ncenB08_tr);
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 6; i++) {
         if (choice == i) {
             u8g2.setDrawColor(1);
             u8g2.drawBox(0, i * 10, 128, 10);

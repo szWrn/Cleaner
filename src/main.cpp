@@ -6,14 +6,25 @@
 
 int page = 0;
 int fan = 0;
+int uv = 0;
 
 void changePage(int p) {
   page = p;
 }
 
+void UV() {
+  if (uv == 0) {
+    uv = 1;
+    digitalWrite(UVPin, HIGH);
+  } else {
+    uv = 0;
+    digitalWrite(UVPin, LOW);
+  }
+}
+
 menu menus[6] = {
   {"Fan", "Off", nullptr},
-  {"UV", "Off", nullptr},
+  {"UV", "Off", UV},
   {"Fan 3", "Off", nullptr},
   {"Fan 4", "Off", nullptr},
   {"Fan 5", "Off", nullptr},
@@ -22,7 +33,9 @@ menu menus[6] = {
 
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 
-void init() {
+void setup() {
+  // put your setup code here, to run once:
+  u8g2.begin();
   pinMode(fansPin1, OUTPUT);
   pinMode(fansPin2, OUTPUT);
   pinMode(upPin, INPUT);
@@ -31,13 +44,7 @@ void init() {
   pinMode(backPin, INPUT);
   pinMode(forwardPin, INPUT);
   digitalWrite(6, HIGH); // Enable pull-down resistor
-  digitalWrite(7, HIGH); // Enable pull-down resistor
-}
-
-void setup() {
-  // put your setup code here, to run once:
-  u8g2.begin();
-  init();
+  digitalWrite(7, HIGH);
 }
 
 void loop() {
