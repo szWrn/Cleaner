@@ -1,7 +1,5 @@
-#define fansPin1 6
-#define fansPin2 7
-
-#define UVPin 5
+#define fanPin 6
+#define UVPin 7
 
 #define upPin 8
 #define downPin 9

@@ -22,8 +22,8 @@ void UV() {
   }
 }
 
-menu menus[6] = {
-  {"Fan", "Off", "On", -1, 0},
+menu menus[3] = {
+  {"Fan", "Off", "On", fanPin, 0},
   {"UV", "Off", "On", UVPin, 0},
   {"Fan 3", "Off", "On", -1, 0}
 };
@@ -33,8 +33,8 @@ U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
 void setup() {
   // put your setup code here, to run once:
   u8g2.begin();
-  pinMode(fansPin1, OUTPUT);
-  pinMode(fansPin2, OUTPUT);
+  pinMode(fanPin, OUTPUT);
+  pinMode(UVPin, OUTPUT);
   pinMode(upPin, INPUT);
   pinMode(downPin, INPUT);
   pinMode(selectPin, INPUT);
@@ -56,27 +56,23 @@ void loop() {
   }
   if (digitalRead(selectPin) == LOW) {
     onClick(menus);
-    delay(100);
+    delay(80);
   }
   fan = 0;
-  if (digitalRead(backPin) == LOW && menus[0].state == 1) {
+  // if (digitalRead(backPin) == LOW && menus[0].state == 1) {
+  //   fan = 1;
+  //   delay(80);
+  // }
+  if (digitalRead(backPin) == LOW) {
     fan = 1;
     delay(80);
   }
-  if (digitalRead(forwardPin) == LOW  && menus[0].state == 1) {
+  // if (digitalRead(forwardPin) == LOW && menus[0].state == 1) {
+  //   fan = -1;
+  //   delay(80);
+  // }
+  if (digitalRead(forwardPin) == LOW) {
     fan = -1;
     delay(80);
-  }
-  if (fan == 1) {
-    digitalWrite(fansPin2, HIGH);
-    digitalWrite(fansPin1, LOW);
-  }
-  if (fan == -1) {
-    digitalWrite(fansPin1, HIGH);
-    digitalWrite(fansPin2, LOW);
-  }
-  if (fan == 0) {
-    digitalWrite(fansPin1, HIGH);
-    digitalWrite(fansPin2, HIGH);
   }
 }
