@@ -76,5 +76,3 @@ void loop() {
     digitalWrite(fansPin2, HIGH);
   }
 }
-
-
