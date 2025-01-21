@@ -23,12 +23,9 @@ void UV() {
 }
 
 menu menus[6] = {
-  {"Fan", "Off", nullptr},
-  {"UV", "Off", UV},
-  {"Fan 3", "Off", nullptr},
-  {"Fan 4", "Off", nullptr},
-  {"Fan 5", "Off", nullptr},
-  {"Fan 6", "Off", nullptr}
+  {"Fan", "Off", "On", -1, 0},
+  {"UV", "Off", "On", UVPin, 0},
+  {"Fan 3", "Off", "On", -1, 0}
 };
 
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
@@ -57,16 +54,16 @@ void loop() {
     down();
     delay(80);
   }
-  // if (digitalRead(selectPin) == LOW) {
-  //   onClick(menus);
-  //   delay(100);
-  // }
+  if (digitalRead(selectPin) == LOW) {
+    onClick(menus);
+    delay(100);
+  }
   fan = 0;
-  if (digitalRead(backPin) == LOW) {
+  if (digitalRead(backPin) == LOW && menus[0].state == 1) {
     fan = 1;
     delay(80);
   }
-  if (digitalRead(forwardPin) == LOW) {
+  if (digitalRead(forwardPin) == LOW  && menus[0].state == 1) {
     fan = -1;
     delay(80);
   }
