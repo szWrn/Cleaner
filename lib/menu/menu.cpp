@@ -3,7 +3,7 @@
 #include <Wire.h>
 #include <Arduino.h>
 
-int choice = 1;
+int choice = 0;
 void display(menu menus[], U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2) {
     u8g2.clearBuffer();
     u8g2.setFont(u8g2_font_ncenB14_tr);
@@ -22,12 +22,12 @@ void display(menu menus[], U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2) {
 }
 
 void up() {
-    if (choice >= 5) choice = 0;
+    if (choice >= 1) choice = 0;
     else choice ++;
 }
 
 void down() {
-    if (choice <= 0) choice = 6;
+    if (choice <= 0) choice = 1;
     else choice --;
 }
 
@@ -37,7 +37,8 @@ void onClick(menu menus[]) {
         menus[choice].value = menus[choice].selected;
         menus[choice].selected = v;
     }
-    if (menus[choice].state == 0) menus[choice].state = 1;
-    else menus[choice].state = 0;
-    if (menus[choice].pin != -1) digitalWrite(menus[choice].pin, menus[choice].state == 0 ? LOW : HIGH);
+    if (menus[choice].state != -1) {
+        menus[choice].state = 1 - menus[choice].state;
+        digitalWrite(menus[choice].pin, menus[choice].state == 0 ? HIGH : LOW);
+    }
 }
